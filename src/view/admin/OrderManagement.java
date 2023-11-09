@@ -37,22 +37,29 @@ public class OrderManagement {
             choice = Validate.validateInt();
             switch (choice) {
                 case 1:
-                    System.out.println(YELLOW_BOLD_BRIGHT + ".------------------------------------------------------------------------------------------------------------.");
-                    System.out.println("|                                          DANH SÁCH ĐƠN HÀNG                                " + RED_BOLD_BRIGHT + "[0] Quay lại    " + YELLOW_BOLD_BRIGHT + "|");
-                    System.out.println("|------------------------------------------------------------------------------------------------------------|");
-                    System.out.println("|  ID  |     Người đặt hàng     |   Tổng thành tiền   |   Thời gian khởi tạo đơn hàng  |      Trạng thái     |");
-                    System.out.println("|------------------------------------------------------------------------------------------------------------|");
-                    if (orderService.findAll().isEmpty()) {
-                        System.out.println("|                                        " + RED_BOLD_BRIGHT + "Danh sách trống !                                                   " + YELLOW_BOLD_BRIGHT + "|");
-                        System.out.println("'------------------------------------------------------------------------------------------------------------'" + RESET);
-                    } else {
-                        for (Order order : orderService.findAll()) {
-                            System.out.printf("|  " + WHITE_BOLD_BRIGHT + "%-2d  " + YELLOW_BOLD_BRIGHT + "|   " + WHITE_BOLD_BRIGHT + "%-19s  " + YELLOW_BOLD_BRIGHT + "|  " + WHITE_BOLD_BRIGHT + "%18s " + YELLOW_BOLD_BRIGHT + "|       " + WHITE_BOLD_BRIGHT + "%-23s  " + YELLOW_BOLD_BRIGHT + "|  " + WHITE_BOLD_BRIGHT + "%-28s  " + YELLOW_BOLD_BRIGHT + "|\n", order.getId(), userService.findById(order.getIdUser()).getUsername(), formatCurrency(order.getTotal()), Format.getCurrentYearMonth(order.getBuyDate()), Status.getStatusByCodeForAdmin(order.getStatus()));
+                    while (true) {
+                        System.out.println(YELLOW_BOLD_BRIGHT + ".------------------------------------------------------------------------------------------------------------.");
+                        System.out.println("|                                          DANH SÁCH ĐƠN HÀNG                                " + RED_BOLD_BRIGHT + "[0] Quay lại    " + YELLOW_BOLD_BRIGHT + "|");
+                        System.out.println("|------------------------------------------------------------------------------------------------------------|");
+                        System.out.println("|  ID  |     Người đặt hàng     |   Tổng thành tiền   |   Thời gian khởi tạo đơn hàng  |      Trạng thái     |");
+                        System.out.println("|------------------------------------------------------------------------------------------------------------|");
+                        if (orderService.findAll().isEmpty()) {
+                            System.out.println("|                                        " + RED_BOLD_BRIGHT + "Danh sách trống !                                                   " + YELLOW_BOLD_BRIGHT + "|");
+                            System.out.println("'------------------------------------------------------------------------------------------------------------'" + RESET);
+                            break;
+                        } else {
+                            for (Order order : orderService.findAll()) {
+                                System.out.printf("|  " + WHITE_BOLD_BRIGHT + "%-2d  " + YELLOW_BOLD_BRIGHT + "|   " + WHITE_BOLD_BRIGHT + "%-19s  " + YELLOW_BOLD_BRIGHT + "|  " + WHITE_BOLD_BRIGHT + "%18s " + YELLOW_BOLD_BRIGHT + "|       " + WHITE_BOLD_BRIGHT + "%-23s  " + YELLOW_BOLD_BRIGHT + "|  " + WHITE_BOLD_BRIGHT + "%-28s  " + YELLOW_BOLD_BRIGHT + "|\n", order.getId(), userService.findById(order.getIdUser()).getUsername(), formatCurrency(order.getTotal()), Format.getCurrentYearMonth(order.getBuyDate()), Status.getStatusByCodeForAdmin(order.getStatus()));
+                            }
+                            System.out.println("'------------------------------------------------------------------------------------------------------------'" + RESET);
                         }
-                        System.out.println("'------------------------------------------------------------------------------------------------------------'" + RESET);
+                        System.out.print(WHITE_BOLD_BRIGHT + "Nhập ID đơn hàng để xem chi tiết (Nhập [0] để quay lại) : " + RESET);
+                        int choiceId = Validate.validateInt();
+                        if (choiceId == 0) {
+                            break;
+                        }
+                        orderDetails(choiceId);
                     }
-                    System.out.print(WHITE_BOLD_BRIGHT + "Nhập ID đơn hàng để xem chi tiết (Nhập [0] để quay lại) : " + RESET);
-                    orderDetails();
                     break;
                 case 2:
                     System.out.print(WHITE_BOLD_BRIGHT + "Nhập userName cần tìm kiếm đơn hàng : " + RESET);
@@ -61,37 +68,49 @@ public class OrderManagement {
                     if (orderListFound.isEmpty()) {
                         System.out.println(RED_BOLD_BRIGHT + "Không tìm thấy đơn hàng nào của [ " + str + " ] !" + RESET);
                     } else {
-                        System.out.println(YELLOW_BOLD_BRIGHT + ".------------------------------------------------------------------------------------------------------------.");
-                        System.out.println("|                                          DANH SÁCH ĐƠN HÀNG                                " + RED_BOLD_BRIGHT + "[0] Quay lại    " + YELLOW_BOLD_BRIGHT + "|");
-                        System.out.println("|------------------------------------------------------------------------------------------------------------|");
-                        System.out.println("|  ID  |     Người đặt hàng     |   Tổng thành tiền   |   Thời gian khởi tạo đơn hàng  |      Trạng thái     |");
-                        System.out.println("|------------------------------------------------------------------------------------------------------------|");
-                        for (Order order : orderListFound) {
-                            System.out.printf("|  " + WHITE_BOLD_BRIGHT + "%-2d  " + YELLOW_BOLD_BRIGHT + "|   " + WHITE_BOLD_BRIGHT + "%-19s  " + YELLOW_BOLD_BRIGHT + "|  " + WHITE_BOLD_BRIGHT + "%18s " + YELLOW_BOLD_BRIGHT + "|       " + WHITE_BOLD_BRIGHT + "%-23s  " + YELLOW_BOLD_BRIGHT + "|  " + WHITE_BOLD_BRIGHT + "%-28s  " + YELLOW_BOLD_BRIGHT + "|\n", order.getId(), userService.findById(order.getIdUser()).getUsername(), formatCurrency(order.getTotal()), Format.getCurrentYearMonth(order.getBuyDate()), Status.getStatusByCodeForAdmin(order.getStatus()));
+                        while (true) {
+                            System.out.println(YELLOW_BOLD_BRIGHT + ".------------------------------------------------------------------------------------------------------------.");
+                            System.out.println("|                                          DANH SÁCH ĐƠN HÀNG                                " + RED_BOLD_BRIGHT + "[0] Quay lại    " + YELLOW_BOLD_BRIGHT + "|");
+                            System.out.println("|------------------------------------------------------------------------------------------------------------|");
+                            System.out.println("|  ID  |     Người đặt hàng     |   Tổng thành tiền   |   Thời gian khởi tạo đơn hàng  |      Trạng thái     |");
+                            System.out.println("|------------------------------------------------------------------------------------------------------------|");
+                            for (Order order : orderListFound) {
+                                System.out.printf("|  " + WHITE_BOLD_BRIGHT + "%-2d  " + YELLOW_BOLD_BRIGHT + "|   " + WHITE_BOLD_BRIGHT + "%-19s  " + YELLOW_BOLD_BRIGHT + "|  " + WHITE_BOLD_BRIGHT + "%18s " + YELLOW_BOLD_BRIGHT + "|       " + WHITE_BOLD_BRIGHT + "%-23s  " + YELLOW_BOLD_BRIGHT + "|  " + WHITE_BOLD_BRIGHT + "%-28s  " + YELLOW_BOLD_BRIGHT + "|\n", order.getId(), userService.findById(order.getIdUser()).getUsername(), formatCurrency(order.getTotal()), Format.getCurrentYearMonth(order.getBuyDate()), Status.getStatusByCodeForAdmin(order.getStatus()));
+                            }
+                            System.out.println("'------------------------------------------------------------------------------------------------------------'" + RESET);
+                            System.out.print(WHITE_BOLD_BRIGHT + "Nhập ID đơn hàng để xem chi tiết (Nhập [0] để quay lại) : " + RESET);
+                            int choiceId = Validate.validateInt();
+                            if (choiceId == 0) {
+                                break;
+                            }
+                            orderDetails(choiceId);
                         }
-                        System.out.println("'------------------------------------------------------------------------------------------------------------'" + RESET);
-                        System.out.print(WHITE_BOLD_BRIGHT + "Nhập ID đơn hàng để xem chi tiết (Nhập [0] để quay lại) : " + RESET);
-                        orderDetails();
                     }
                     break;
                 case 3:
-                    orderService.sortOrderByDate();
-                    System.out.println(YELLOW_BOLD_BRIGHT + ".------------------------------------------------------------------------------------------------------------.");
-                    System.out.println("|                           DANH SÁCH ĐƠN HÀNG SẮP XẾP THEO THỜI GIAN KHỞI TẠO               " + RED_BOLD_BRIGHT + "[0] Quay lại    " + YELLOW_BOLD_BRIGHT + "|");
-                    System.out.println("|------------------------------------------------------------------------------------------------------------|");
-                    System.out.println("|  ID  |     Người đặt hàng     |   Tổng thành tiền   |   Thời gian khởi tạo đơn hàng  |      Trạng thái     |");
-                    System.out.println("|------------------------------------------------------------------------------------------------------------|");
-                    if (orderService.findAll().isEmpty()) {
-                        System.out.println("|                                        " + RED_BOLD_BRIGHT + "Danh sách trống !                                                   " + YELLOW_BOLD_BRIGHT + "|");
-                        System.out.println("'------------------------------------------------------------------------------------------------------------'" + RESET);
-                    } else {
-                        for (Order order : orderService.findAll()) {
-                            System.out.printf("|  " + WHITE_BOLD_BRIGHT + "%-2d  " + YELLOW_BOLD_BRIGHT + "|   " + WHITE_BOLD_BRIGHT + "%-19s  " + YELLOW_BOLD_BRIGHT + "|  " + WHITE_BOLD_BRIGHT + "%18s " + YELLOW_BOLD_BRIGHT + "|       " + WHITE_BOLD_BRIGHT + "%-23s  " + YELLOW_BOLD_BRIGHT + "|  " + WHITE_BOLD_BRIGHT + "%-28s  " + YELLOW_BOLD_BRIGHT + "|\n", order.getId(), userService.findById(order.getIdUser()).getUsername(), formatCurrency(order.getTotal()), Format.getCurrentYearMonth(order.getBuyDate()), Status.getStatusByCodeForAdmin(order.getStatus()));
+                    while (true) {
+                        orderService.sortOrderByDate();
+                        System.out.println(YELLOW_BOLD_BRIGHT + ".------------------------------------------------------------------------------------------------------------.");
+                        System.out.println("|                           DANH SÁCH ĐƠN HÀNG SẮP XẾP THEO THỜI GIAN KHỞI TẠO               " + RED_BOLD_BRIGHT + "[0] Quay lại    " + YELLOW_BOLD_BRIGHT + "|");
+                        System.out.println("|------------------------------------------------------------------------------------------------------------|");
+                        System.out.println("|  ID  |     Người đặt hàng     |   Tổng thành tiền   |   Thời gian khởi tạo đơn hàng  |      Trạng thái     |");
+                        System.out.println("|------------------------------------------------------------------------------------------------------------|");
+                        if (orderService.findAll().isEmpty()) {
+                            System.out.println("|                                        " + RED_BOLD_BRIGHT + "Danh sách trống !                                                   " + YELLOW_BOLD_BRIGHT + "|");
+                            System.out.println("'------------------------------------------------------------------------------------------------------------'" + RESET);
+                        } else {
+                            for (Order order : orderService.findAll()) {
+                                System.out.printf("|  " + WHITE_BOLD_BRIGHT + "%-2d  " + YELLOW_BOLD_BRIGHT + "|   " + WHITE_BOLD_BRIGHT + "%-19s  " + YELLOW_BOLD_BRIGHT + "|  " + WHITE_BOLD_BRIGHT + "%18s " + YELLOW_BOLD_BRIGHT + "|       " + WHITE_BOLD_BRIGHT + "%-23s  " + YELLOW_BOLD_BRIGHT + "|  " + WHITE_BOLD_BRIGHT + "%-28s  " + YELLOW_BOLD_BRIGHT + "|\n", order.getId(), userService.findById(order.getIdUser()).getUsername(), formatCurrency(order.getTotal()), Format.getCurrentYearMonth(order.getBuyDate()), Status.getStatusByCodeForAdmin(order.getStatus()));
+                            }
+                            System.out.println("'------------------------------------------------------------------------------------------------------------'" + RESET);
                         }
-                        System.out.println("'------------------------------------------------------------------------------------------------------------'" + RESET);
+                        System.out.print(WHITE_BOLD_BRIGHT + "Nhập ID đơn hàng để xem chi tiết (Nhập [0] để quay lại) : " + RESET);
+                        int choiceId = Validate.validateInt();
+                        if (choiceId == 0) {
+                            break;
+                        }
+                        orderDetails(choiceId);
                     }
-                    System.out.print(WHITE_BOLD_BRIGHT + "Nhập ID đơn hàng để xem chi tiết (Nhập [0] để quay lại) : " + RESET);
-                    orderDetails();
                     break;
                 case 4:
                     break;
@@ -104,12 +123,9 @@ public class OrderManagement {
         return formatter.format(money);
     }
 
-    private void orderDetails() {
+    private void orderDetails(int choiceId) {
         while (true) {
-            int choiceId = Validate.validateInt();
-            if (choiceId == 0) {
-                break;
-            } else if (orderService.findById(choiceId) != null) {
+            if (orderService.findById(choiceId) != null) {
                 Order order = orderService.findById(choiceId);
                 User user = userService.findById(order.getIdUser());
                 System.out.println(YELLOW_BOLD_BRIGHT + ".------------------------------------------------------------------------------------------------------------------------------.");
@@ -172,6 +188,9 @@ public class OrderManagement {
                     }
                     break;
                 }
+            } else {
+                System.out.println(RED_BOLD_BRIGHT + "Không tồn tại đơn hàng !" + RESET);
+                break;
             }
         }
     }

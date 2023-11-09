@@ -92,7 +92,7 @@ public class ProductServiceIMPL implements IProductService {
     public List<Product> findProductByName(String productName) {
         List<Product> matchedList = new ArrayList<>();
         for (Product product : productList) {
-            if (product.getProductName().contains(productName)) {
+            if (product.getProductName().toLowerCase().contains(productName)) {
                 matchedList.add(product);
             }
         }

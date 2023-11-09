@@ -39,7 +39,7 @@ public class ProductDetail {
             System.out.println("|--------------------------------------------------------|");
             System.out.println("|" + YELLOW_BOLD_BRIGHT + "   [1] Cho vào giỏ hàng     |" + RED_BOLD_BRIGHT + "       [2] Quay lại        " + YELLOW_BOLD_BRIGHT + "|");
             System.out.println("'--------------------------------------------------------'" + RESET);
-            System.out.print("Nhập lựa chọn của bạn : ");
+            System.out.print(WHITE_BOLD_BRIGHT + "Nhập lựa chọn của bạn : " + RESET);
             choice = Validate.validateInt();
             switch (choice) {
                 case 1:

@@ -65,7 +65,7 @@ public class ListProducts {
                     System.out.println("|-------------------------------------------------------|");
                     System.out.println("|" + WHITE_BOLD_BRIGHT + "                   [0] Quay lại                        " + YELLOW_BOLD_BRIGHT + "|");
                     System.out.println("'-------------------------------------------------------'" + RESET);
-                    System.out.print("Nhập lựa chọn của bạn :");
+                    System.out.print(WHITE_BOLD_BRIGHT + "Nhập lựa chọn của bạn :" + RESET);
                     while (true) {
                         int choiceCate = Validate.validateInt();
                         if (choiceCate == 0) {
@@ -73,7 +73,7 @@ public class ListProducts {
                         } else if (categoryService.findById(choiceCate) != null) {
                             List<Product> productsFoundList = findProductsByCategory(choiceCate);
                             tableProduct();
-                            if (productsFoundList.isEmpty()) {
+                            if (productsFoundList.isEmpty() || !categoryService.findById(choiceCate).isStatus()) {
                                 System.out.println(YELLOW_BOLD_BRIGHT + "|" + WHITE_BOLD_BRIGHT + "                                           DANH SÁCH RỖNG                                                         " + YELLOW_BOLD_BRIGHT + "|");
                                 System.out.println("'------------------------------------------------------------------------------------------------------------------'" + RESET);
                             } else {
@@ -137,7 +137,7 @@ public class ListProducts {
             int choiceId = Validate.validateInt();
             if (choiceId == 0) {
                 break;
-            } else if (productService.findById(choiceId) != null) {
+            } else if (productService.findById(choiceId) != null && productService.findById(choiceId).isStatus()) {
                 new ProductDetail().productDetail(choiceId);
                 break;
             } else {

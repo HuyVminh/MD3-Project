@@ -40,13 +40,13 @@ public class MyCart {
             } else {
                 for (int idProduct : cart.getProductCart().keySet()) {
                     Product product = productService.findById(idProduct);
-                    System.out.printf("|    %3d      | %-39s |     %2d     | %18s | %21s |\n", idProduct, product.getProductName(), cart.getProductCart().get(idProduct), formatCurrency(product.getUnitPrice()), formatCurrency(product.getUnitPrice() * cart.getProductCart().get(idProduct)));
+                    System.out.printf("|    " + WHITE_BOLD_BRIGHT + "%3d      " + YELLOW_BOLD_BRIGHT + "| " + WHITE_BOLD_BRIGHT + "%-39s " + YELLOW_BOLD_BRIGHT + "|     " + WHITE_BOLD_BRIGHT + "%2d     " + YELLOW_BOLD_BRIGHT + "| " + WHITE_BOLD_BRIGHT + "%18s " + YELLOW_BOLD_BRIGHT + "| " + WHITE_BOLD_BRIGHT + "%21s " + YELLOW_BOLD_BRIGHT + "|\n", idProduct, product.getProductName(), cart.getProductCart().get(idProduct), formatCurrency(product.getUnitPrice()), formatCurrency(product.getUnitPrice() * cart.getProductCart().get(idProduct)));
                 }
             }
             System.out.println("|-----------------------------------------------------------------------------------------------------------------|");
-            System.out.printf("|                                       TỔNG GIÁ TIỀN                                     | %21s |\n", formatCurrency(totalBill()));
+            System.out.printf("|                                       TỔNG GIÁ TIỀN                                     |" + PURPLE_BOLD_BRIGHT + " %21s " + YELLOW_BOLD_BRIGHT + "|\n", formatCurrency(totalBill()));
             System.out.println("|-----------------------------------------------------------------------------------------------------------------|");
-            System.out.println("|    [1] Thay đổi số lượng sản phẩm     |  [2] Xóa sản phẩm  |         [3] Thanh Toán          |   " + RED_BOLD_BRIGHT + "[4] Quay lại   " + YELLOW_BOLD_BRIGHT + "|");
+            System.out.println("|    [1] Thay đổi số lượng sản phẩm     |  [2] Xóa sản phẩm  |         " + PURPLE_BOLD_BRIGHT + "[3] Thanh Toán          " + YELLOW_BOLD_BRIGHT + "|   " + RED_BOLD_BRIGHT + "[4] Quay lại   " + YELLOW_BOLD_BRIGHT + "|");
             System.out.println("'-----------------------------------------------------------------------------------------------------------------'" + RESET);
             System.out.print(WHITE_BOLD_BRIGHT + "Nhập lựa chọn của bạn : " + RESET);
             choice = Validate.validateInt();
@@ -59,7 +59,9 @@ public class MyCart {
                         int number = Validate.validateInt();
                         cart.getProductCart().put(idUpdate, number);
                         cartService.save(cart);
-                        System.out.println("Đã cập nhật số lượng sản phẩm !");
+                        System.out.println(GREEN_BOLD_BRIGHT + "Đã cập nhật số lượng sản phẩm !" + RESET);
+                    } else {
+                        System.out.println(RED_BOLD_BRIGHT + "Không tồn tại sản phẩm đã nhập trong giỏ hàng !" + RESET);
                     }
                     break;
                 case 2:
@@ -72,14 +74,16 @@ public class MyCart {
                             if (str.equalsIgnoreCase("y")) {
                                 cart.getProductCart().remove(idDelete);
                                 cartService.save(cart);
-                                System.out.println(GREEN_BRIGHT+"Đã xóa sản phẩm thành công !"+RESET);
+                                System.out.println(GREEN_BRIGHT + "Đã xóa sản phẩm thành công !" + RESET);
                                 break;
                             } else if (str.equalsIgnoreCase("n")) {
                                 break;
                             } else {
-                                System.out.print(RED_BRIGHT+"Không hợp lệ, vui lòng nhập lại : "+RESET);
+                                System.out.print(RED_BRIGHT + "Không hợp lệ, vui lòng nhập lại : " + RESET);
                             }
                         }
+                    } else {
+                        System.out.println(RED_BOLD_BRIGHT + "Không tồn tại sản phẩm đã nhập trong giỏ hàng !" + RESET);
                     }
                     break;
                 case 3:
@@ -127,14 +131,14 @@ public class MyCart {
                         orderService.save(order);
                         cart.setProductCart(new HashMap<>());
                         cartService.save(cart);
-                        System.out.println(GREEN_BOLD_BRIGHT+"Thanh toán thành công !"+RESET);
+                        System.out.println(GREEN_BOLD_BRIGHT + "Thanh toán thành công !" + RESET);
                         choice = 4;
                     }
                     break;
                 case 4:
                     break;
                 default:
-                    System.out.print(RED_BRIGHT+"Lựa chọn không phù hợp. Mời nhập lại : "+RESET);
+                    System.out.println(RED_BRIGHT + "Lựa chọn không phù hợp. Mời nhập lại ! " + RESET);
                     break;
             }
         }

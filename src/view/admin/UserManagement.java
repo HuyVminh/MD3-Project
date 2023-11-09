@@ -24,6 +24,7 @@ public class UserManagement {
             System.out.println("|                       " + WHITE_BOLD_BRIGHT + "[4] Thay đổi quyền truy cập                      " + YELLOW_BOLD_BRIGHT + "|");
             System.out.println("|                       " + WHITE_BOLD_BRIGHT + "[5] Quay lại                                     " + YELLOW_BOLD_BRIGHT + "|");
             System.out.println("'-----------------------------------------------------------------------'" + RESET);
+            System.out.print(WHITE_BOLD_BRIGHT + "Nhập lựa chọn của bạn : " + RESET);
             choice = Validate.validateInt();
             switch (choice) {
                 case 1:
@@ -65,7 +66,7 @@ public class UserManagement {
                             System.out.println(YELLOW_BOLD_BRIGHT + ".-ID----------HỌ VÀ TÊN-------------------USERNAME-----------------EMAIL------------ĐIỆN THOẠI------QUYỀN TRUY CẬP---TRẠNG THÁI---.");
                             user.display();
                             System.out.println("'---------------------------------------------------------------------------------------------------------------------------------'" + RESET);
-                            System.out.println("Bạn có muốn khóa / mở khóa tài khoản này (Y/N) ?");
+                            System.out.println(WHITE_BOLD_BRIGHT + "Bạn có muốn khóa / mở khóa tài khoản này (Y/N) ?" + RESET);
                             while (true) {
                                 String ch = Validate.validateString();
                                 if (ch.equalsIgnoreCase("y")) {
@@ -95,23 +96,22 @@ public class UserManagement {
                             System.out.println(YELLOW_BOLD_BRIGHT + ".-ID----------HỌ VÀ TÊN-------------------USERNAME-----------------EMAIL------------ĐIỆN THOẠI------QUYỀN TRUY CẬP---TRẠNG THÁI---.");
                             user.display();
                             System.out.println("'---------------------------------------------------------------------------------------------------------------------------------'" + RESET);
-                            System.out.println("Bạn có muốn thay đổi quyền truy cập của tài khoản này (Y/N) ?");
-                            String ch = Validate.validateString();
-                            while (!ch.equalsIgnoreCase("y") || !ch.equalsIgnoreCase("n")) {
-                                System.out.println(RED_BOLD_BRIGHT + "Không hợp lệ, vui lòng nhập lại" + RESET);
-                                ch = Validate.validateString();
-                            }
-                            if (ch.equalsIgnoreCase("y")) {
-                                if (user.getRole() == ADMIN) {
-                                    user.setRole(USER);
-                                    userService.save(user);
-                                } else {
-                                    user.setRole(ADMIN);
-                                    userService.save(user);
+                            System.out.print("Bạn có muốn thay đổi quyền truy cập của tài khoản này (Y/N) ? ");
+                            while (true) {
+                                String ch = Validate.validateString();
+                                if (ch.equalsIgnoreCase("y")) {
+                                    if (user.getRole() == ADMIN) {
+                                        user.setRole(USER);
+                                        userService.save(user);
+                                    } else {
+                                        user.setRole(ADMIN);
+                                        userService.save(user);
+                                    }
+                                    System.out.println(GREEN_BOLD_BRIGHT + "Tài khoản đã được cập nhật quyền truy cập !" + RESET);
+                                } else if (ch.equalsIgnoreCase("n")) {
+                                    break;
                                 }
-                                System.out.println(GREEN_BOLD_BRIGHT + "Tài khoản đã được cập nhật quyền truy cập !" + RESET);
-                            } else {
-                                return;
+                                System.out.print(RED_BOLD_BRIGHT + "Không hợp lệ, vui lòng nhập lại : " + RESET);
                             }
                         }
                     }
@@ -119,7 +119,7 @@ public class UserManagement {
                 case 5:
                     break;
                 default:
-                    System.out.println(RED_BOLD_BRIGHT + "Không hợp lệ, vui lòng nhập lại" + RESET);
+                    System.out.print(RED_BOLD_BRIGHT + "Không hợp lệ, vui lòng nhập lại : " + RESET);
             }
         }
     }

@@ -192,7 +192,7 @@ public class PersonInfor {
                     int choiceId = Validate.validateInt();
                     if (choiceId == 0) {
                         break;
-                    } else if (orderService.findById(choiceId) != null) {
+                    } else if (orderService.findById(choiceId) != null && orderService.findById(choiceId).getIdUser() == userLogin.getUserId()) {
                         Order order = orderService.findById(choiceId);
                         User user = userService.findById(order.getIdUser());
                         System.out.println(YELLOW_BOLD_BRIGHT + ".------------------------------------------------------------------------------------------------------------------------------.");
@@ -210,19 +210,13 @@ public class PersonInfor {
                         }
                         System.out.println("|------------------------------------------------------------------------------------------------------------------------------|");
                         if (order.getStatus() == 0) {
-                            System.out.println("|               [1] Xác nhận đơn hàng                 |                 [2] Hủy đơn hàng                  |    " + RED_BOLD_BRIGHT + "[0] Quay lại    " + YELLOW_BOLD_BRIGHT + "|");
-                            System.out.println("'------------------------------------------------------------------------------------------------------------------------------'" + RESET);
+                            System.out.println("|                        [2] Hủy đơn hàng                             |                      " + RED_BOLD_BRIGHT + "[0] Quay lại    " + YELLOW_BOLD_BRIGHT + "|");
+                            System.out.println("'---------------------------------------------------------------------------------------------------------+--------------------'" + RESET);
                             System.out.print(WHITE_BOLD_BRIGHT + "Nhập lựa chọn của bạn : " + RESET);
                             int choiceChangeStatus;
                             do {
                                 choiceChangeStatus = Validate.validateInt();
                                 switch (choiceChangeStatus) {
-                                    case 1:
-                                        order.setStatus(1);
-                                        orderService.save(order);
-                                        System.out.println(GREEN_BOLD_BRIGHT + "Đơn hàng đã được xác nhận !" + RESET);
-                                        choiceChangeStatus = 0;
-                                        break;
                                     case 2:
                                         order.setStatus(2);
                                         orderService.save(order);
@@ -250,6 +244,8 @@ public class PersonInfor {
                             }
                             break;
                         }
+                    }else {
+                        System.out.print(RED_BOLD_BRIGHT+"Không hợp lệ, vui lòng nhập lại : "+RESET);
                     }
                 }
                 break;
@@ -258,12 +254,10 @@ public class PersonInfor {
     }
 
     private void changePassword() {
-        System.out.println(YELLOW_BOLD_BRIGHT + ".----------------------------------------------------------------------.");
-        System.out.println("|                         THAY ĐỔI MẬT KHẨU                            |");
-        System.out.println("'----------------------------------------------------------------------'" + RESET);
+        System.out.println(YELLOW_BOLD_BRIGHT + "--------------------------THAY ĐỔI MẬT KHẨU-----------------------------" + RESET);
         System.out.print("Nhập mật khẩu hiện tại : ");
-        String pass = Config.scanner().nextLine();
-        if (userLogin.equals(pass)) {
+        String pass = Validate.validateString();
+        if (userLogin.getPassword().equals(pass)) {
             System.out.print("Nhập mật khẩu mới : ");
             String newPass = Validate.validateString();
             System.out.print("Xác nhận mật khẩu : ");
@@ -274,6 +268,7 @@ public class PersonInfor {
                     config.writeFile(Config.URL_USER_LOGIN, userLogin);
                     User userEdit = userService.findById(userLogin.getUserId());
                     userService.save(userEdit);
+                    System.out.println(GREEN_BOLD_BRIGHT + "Thay đổi mật khẩu thành công !" + RESET);
                     break;
                 } else {
                     System.out.print(RED_BRIGHT + "Mật khẩu không khớp, vui lòng nhập lại : " + RESET);

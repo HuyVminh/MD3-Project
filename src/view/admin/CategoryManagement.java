@@ -62,8 +62,7 @@ public class CategoryManagement {
                         }
                         System.out.println("Nhập mô tả danh mục : ");
                         category.setDescription(Validate.validateString());
-                        System.out.println("Nhập trạng thái danh mục :");
-                        category.setStatus(Boolean.parseBoolean(Validate.validateString()));
+                        category.setStatus(true);
                         categoryService.save(category);
                     }
                     System.out.println(GREEN_BOLD_BRIGHT + "Thêm mới danh mục thành công." + RESET);

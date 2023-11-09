@@ -55,6 +55,7 @@ public class Home {
         if (user == null) { // check xem có tồn tại hay không
             System.out.println(RED_BOLD_BRIGHT + "Sai username hoặc mật khẩu !" + RESET);
         } else {
+            System.out.println(GREEN_BOLD_BRIGHT + "Đăng nhập thành công !" + RESET);
             checkRoleLogin(user);
         }
     }
@@ -74,54 +75,55 @@ public class Home {
     }
 
     private void register() {
-        System.out.println("======FORM REGISTER ======");
+        System.out.println(YELLOW_BOLD_BRIGHT + "-----------------------REGISTER----------------------" + RESET);
         User user = new User();
         user.setUserId(userService.getNewId());
-        System.out.println("UserId : " + user.getUserId());
-        System.out.println("Nhập họ tên : ");
+        System.out.println("ID tài khoản : " + user.getUserId());
+        System.out.print("Nhập họ tên : ");
         user.setFullName(Validate.validateString());
-        System.out.println("Nhập tên tài khoản : ");
+        System.out.print("Nhập tên tài khoản : ");
         while (true) {
             String username = Validate.validateString();
             if (userService.existUserName(username)) {
-                System.out.println("Đã tồn tại tên đăng nhập, mời nhập lại");
+                System.out.print(RED + "Đã tồn tại tên đăng nhập, mời nhập lại : " + RESET);
             } else {
                 user.setUsername(username);
                 break;
             }
         }
-        System.out.println("Nhập mật khẩu");
+        System.out.print("Nhập mật khẩu : ");
         user.setPassword(Validate.validateString());
-        System.out.println("Nhập lại mật khẩu :");
+        System.out.print("Nhập lại mật khẩu : ");
         while (true) {
             String repeatPass = Validate.validateString();
             if (user.getPassword().equals(repeatPass)) {
                 break;
             } else {
-                System.out.println("Mật khẩu không khớp, mời nhập lại.");
+                System.out.print(RED + "Mật khẩu không khớp, mời nhập lại : " + RESET);
             }
         }
-        System.out.println("Nhập email : ");
+        System.out.print("Nhập email : ");
         while (true) {
             String email = Validate.validateEmail();
             if (userService.existEmail(email)) {
-                System.out.println("Đã tồn tại email, mời nhập lại");
+                System.out.print(RED + "Đã tồn tại email, mời nhập lại : " + RESET);
             } else {
                 user.setEmail(email);
                 break;
             }
         }
-        System.out.println("Nhập số điện thoại : ");
+        System.out.print("Nhập số điện thoại : ");
         while (true) {
             String phone = Validate.validateString();
             if (Validate.validatePhoneNumber(phone)) {
                 user.setPhone(phone);
                 break;
             } else {
-                System.out.println("Số điện thoại phải gồm 10 số và bắt đầu bằng số 0, vui lòng nhập lại :");
+                System.out.print(RED + "Số điện thoại phải gồm 10 số và bắt đầu bằng số 0, vui lòng nhập lại : " + RESET);
             }
         }
         userService.save(user);
-        System.out.println("Tạo tài khoản thành công");
+        System.out.println(YELLOW_BOLD_BRIGHT + "-----------------------------------------------------" + RESET);
+        System.out.println(GREEN_BOLD_BRIGHT + "Tạo tài khoản thành công !" + RESET);
     }
 }

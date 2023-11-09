@@ -120,11 +120,10 @@ public class ProductManagement {
                             }
                         }
                         System.out.println("Nhập giá sản phẩm:");
-                        product.setUnitPrice(Double.parseDouble(Config.scanner().nextLine()));
+                        product.setUnitPrice(Validate.validateInt());
                         System.out.println("Nhập số lượng sản phẩm");
                         product.setStock(Validate.validateInt());
-                        System.out.println("Nhập trạng thái sản phẩm");
-                        product.setStatus(Boolean.parseBoolean(Config.scanner().nextLine()));
+                        product.setStatus(true);
                         productService.save(product);
                     }
                     System.out.println(GREEN_BOLD_BRIGHT + "Thêm mới sản phẩm thành công" + RESET);
@@ -191,7 +190,7 @@ public class ProductManagement {
                                     break;
                                 case 4:
                                     System.out.println("Mời bạn nhập giá tiền mới:");
-                                    productEdit.setUnitPrice(Double.parseDouble(Config.scanner().nextLine()));
+                                    productEdit.setUnitPrice(Validate.validateInt());
                                     productService.save(productEdit);
                                     System.out.println(GREEN_BOLD_BRIGHT + "Sửa thành công giá tiền" + RESET);
                                     break;
@@ -221,7 +220,7 @@ public class ProductManagement {
                                 case 7:
                                     break;
                                 default:
-                                    System.out.println(RED_BOLD_BRIGHT + "Lựa chọn không hợp lệ. Vui lòng chọn lại : " + RESET);
+                                    System.out.print(RED_BOLD_BRIGHT + "Lựa chọn không hợp lệ. Vui lòng chọn lại : " + RESET);
                             }
                         }
                     }
@@ -229,7 +228,7 @@ public class ProductManagement {
                 case 5:
                     break;
                 default:
-                    System.out.println(RED_BOLD_BRIGHT + "Không hợp lệ, vui lòng nhập lại." + RESET);
+                    System.out.print(RED_BOLD_BRIGHT + "Không hợp lệ, vui lòng nhập lại :" + RESET);
             }
         }
     }
