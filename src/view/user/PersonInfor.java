@@ -14,6 +14,7 @@ import service.product.IProductService;
 import service.product.ProductServiceIMPL;
 import service.user.IUserService;
 import service.user.UserServiceIMPL;
+import view.Home;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -244,8 +245,8 @@ public class PersonInfor {
                             }
                             break;
                         }
-                    }else {
-                        System.out.print(RED_BOLD_BRIGHT+"Không hợp lệ, vui lòng nhập lại : "+RESET);
+                    } else {
+                        System.out.print(RED_BOLD_BRIGHT + "Không hợp lệ, vui lòng nhập lại : " + RESET);
                     }
                 }
                 break;
@@ -269,6 +270,8 @@ public class PersonInfor {
                     User userEdit = userService.findById(userLogin.getUserId());
                     userService.save(userEdit);
                     System.out.println(GREEN_BOLD_BRIGHT + "Thay đổi mật khẩu thành công !" + RESET);
+                    config.writeFile(Config.URL_USER_LOGIN, null);
+                    new Home().menuHome();
                     break;
                 } else {
                     System.out.print(RED_BRIGHT + "Mật khẩu không khớp, vui lòng nhập lại : " + RESET);

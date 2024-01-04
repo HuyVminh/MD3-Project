@@ -43,7 +43,7 @@ public class Home {
         }
     }
 
-    private void login() {
+    public void login() {
 
         System.out.println(YELLOW_BOLD_BRIGHT + "-----------------------FORM LOGIN----------------------" + RESET);
         System.out.print(WHITE_BOLD_BRIGHT + "       Nhập username : " + RESET);

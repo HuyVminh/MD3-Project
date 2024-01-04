@@ -46,7 +46,7 @@ public class MyCart {
             System.out.println("|-----------------------------------------------------------------------------------------------------------------|");
             System.out.printf("|                                       TỔNG GIÁ TIỀN                                     |" + PURPLE_BOLD_BRIGHT + " %21s " + YELLOW_BOLD_BRIGHT + "|\n", formatCurrency(totalBill()));
             System.out.println("|-----------------------------------------------------------------------------------------------------------------|");
-            System.out.println("|    [1] Thay đổi số lượng sản phẩm     |  [2] Xóa sản phẩm  |         " + PURPLE_BOLD_BRIGHT + "[3] Thanh Toán          " + YELLOW_BOLD_BRIGHT + "|   " + RED_BOLD_BRIGHT + "[4] Quay lại   " + YELLOW_BOLD_BRIGHT + "|");
+            System.out.println("|    [1] Thay đổi số lượng sản phẩm     |  [2] Xóa sản phẩm  |      " + PURPLE_BOLD_BRIGHT + "[3] Thanh Toán        " + YELLOW_BOLD_BRIGHT + "|      " + RED_BOLD_BRIGHT + "[4] Quay lại     " + YELLOW_BOLD_BRIGHT + "|");
             System.out.println("'-----------------------------------------------------------------------------------------------------------------'" + RESET);
             System.out.print(WHITE_BOLD_BRIGHT + "Nhập lựa chọn của bạn : " + RESET);
             choice = Validate.validateInt();
@@ -57,9 +57,17 @@ public class MyCart {
                     if (cart.getProductCart().containsKey(idUpdate)) {
                         System.out.print("Nhập số lượng cần thay đổi : ");
                         int number = Validate.validateInt();
-                        cart.getProductCart().put(idUpdate, number);
-                        cartService.save(cart);
-                        System.out.println(GREEN_BOLD_BRIGHT + "Đã cập nhật số lượng sản phẩm !" + RESET);
+                        if (number == 0) {
+                            cart.getProductCart().remove(idUpdate);
+                            cartService.save(cart);
+                            System.out.println(GREEN_BOLD_BRIGHT + "Đã xóa sản phẩm khỏi giỏ hàng !" + RESET);
+                        } else if (number > 0) {
+                            cart.getProductCart().put(idUpdate, number);
+                            cartService.save(cart);
+                            System.out.println(GREEN_BOLD_BRIGHT + "Đã cập nhật số lượng sản phẩm !" + RESET);
+                        } else {
+                            System.out.println("Không hợp lệ !");
+                        }
                     } else {
                         System.out.println(RED_BOLD_BRIGHT + "Không tồn tại sản phẩm đã nhập trong giỏ hàng !" + RESET);
                     }
